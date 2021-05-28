@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+    nginx:
+        image: nginx:stable-alpine
+        restart: always
+        volumes: 
+            - ./default.conf:/etc/nginx/conf.d/default.conf
+            - ./dist/:/usr/share/nginx/html/
+            - ./ssl/:/etc/ssl/
+        expose:
+            - "80"
+        ports:
+            - "80:80"
+            - "443:443"
+        networks:
+            - vue-service-worker-demo
+          
+networks:
+    vue-service-worker-demo:

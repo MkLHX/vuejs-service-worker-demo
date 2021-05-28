@@ -27,27 +27,6 @@ export default {
       notificationsEnabled: false,
     };
   },
-
-  created() {
-    // Listen for swUpdated event and display refresh snackbar as required.
-    document.addEventListener("swUpdated", this.showRefreshUI, { once: true });
-    // Refresh all open app tabs when a new service worker is installed.
-    navigator.serviceWorker &&
-      navigator.serviceWorker.addEventListener(
-        //triggered by registration.claim
-        "controllerchange",
-        () => {
-          if (this.refreshing) return;
-          this.refreshing = true;
-          console.log("controllerchange triggered, -> auto refresh!!");
-          window.location.reload();
-        }
-      );
-    "Notification" in window &&
-      navigator.serviceWorker &&
-      Notification.requestPermission().then(this.callbackNotifyPermission);
-  },
-
   methods: {
     showRefreshUI(e) {
       // Display a button inviting the user to refresh/reload the app due
@@ -96,6 +75,25 @@ export default {
         });
       }
     },
+  },
+  created() {
+    // Listen for swUpdated event and display refresh snackbar as required.
+    document.addEventListener("swUpdated", this.showRefreshUI, { once: true });
+    // Refresh all open app tabs when a new service worker is installed.
+    navigator.serviceWorker &&
+      navigator.serviceWorker.addEventListener(
+        //triggered by registration.claim
+        "controllerchange",
+        () => {
+          if (this.refreshing) return;
+          this.refreshing = true;
+          console.log("controllerchange triggered, -> auto refresh!!");
+          window.location.reload();
+        }
+      );
+    "Notification" in window &&
+      navigator.serviceWorker &&
+      Notification.requestPermission().then(this.callbackNotifyPermission);
   },
 };
 </script>
