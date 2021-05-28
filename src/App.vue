@@ -1,11 +1,17 @@
 <template>
   <div id="app">
-    <button
-      v-if="updateExists"
-      @click="refreshApp"
-      class="btn"
-    >New version available! Click to update</button>
+    <button v-if="updateExists" @click="refreshApp" class="btn">
+      New version available! Click to update
+    </button>
     <div v-else>There's no update yet.</div>
+    <br />
+    <button
+      v-if="notificationsEnabled"
+      @click="notify('hello', 'world')"
+      class="btn"
+    >
+      send push notification
+    </button>
   </div>
 </template>
 
@@ -16,7 +22,9 @@ export default {
     return {
       refreshing: false,
       worker: null,
-      updateExists: false
+      updateExists: false,
+      notificationsSupported: false,
+      notificationsEnabled: false,
     };
   },
 
@@ -35,6 +43,9 @@ export default {
           window.location.reload();
         }
       );
+    "Notification" in window &&
+      navigator.serviceWorker &&
+      Notification.requestPermission().then(this.callbackNotifyPermission);
   },
 
   methods: {
@@ -47,14 +58,12 @@ export default {
         this.worker = e.detail;
         this.updateExists = true;
         console.log("Showing refresh button.");
-        console.log(this.worker);
       } else {
         console.warn("No worker data found!");
       }
     },
     refreshApp() {
       console.log("skipWaiting started");
-      console.log(this.worker);
       // Handle a user tap on the update app button.
       this.updateExists = false;
       // Protect against missing registration.waiting.
@@ -64,8 +73,30 @@ export default {
       }
       this.worker.postMessage({ type: "SKIP_WAITING" });
       console.log("skipWaiting finished");
-    }
-  }
+    },
+    callbackNotifyPermission(permission) {
+      this.notificationsSupported = true;
+      if (permission === "granted") {
+        console.log("push notifications are allowed");
+        this.notificationsEnabled = true;
+      } else if (permission === "denied") {
+        console.log("push notifications not allowed");
+        alert("you need to allow notifications on this device!");
+        this.notificationsEnabled = false;
+      }
+    },
+    notify(head, body) {
+      if (this.notificationsSupported) {
+        new Notification(head, {
+          body: body,
+          icon: "/img/icons/android-chrome-192x192.png",
+          image: "/img/icons/android-chrome-192x192.png",
+          vibrate: [300, 200, 300],
+          badge: "/img/icons/apple-touch-icon-76x76.png",
+        });
+      }
+    },
+  },
 };
 </script>
 

@@ -10,11 +10,17 @@ if (process.env.NODE_ENV === 'production') {
         'For more details, visit https://goo.gl/AFskqB'
       );
     },
-    registered(reg) {
+    registered(registration) {
       console.log('Service worker has been registered.');
       setInterval(() => {
-        reg.update();
-      }, 1000 * 60 * 60); // e.g. hourly checks
+        registration.update();
+        console.log("auto check if new version is available");
+      }, 10000); // e.g. hourly checks
+      registration.pushManager.subscribe().then(
+        function (pushSubscription) {
+          return pushSubscription
+        }
+      )
     },
     cached() {
       console.log('Content has been cached for offline use.');
@@ -22,10 +28,10 @@ if (process.env.NODE_ENV === 'production') {
     updatefound() {
       console.log('New content is downloading.');
     },
-    updated(reg) {
+    updated(registration) {
       console.log('New content is available; please refresh.');
       document.dispatchEvent(
-        new CustomEvent('swUpdated', { detail: reg.waiting })
+        new CustomEvent('swUpdated', { detail: registration.waiting })
       );
     },
     offline() {
