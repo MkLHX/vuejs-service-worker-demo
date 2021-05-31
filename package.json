@@ -2,17 +2,18 @@
   "name": "vue-service-worker-demo",
   "version": "0.1.0",
   "private": true,
+  "description": "",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "watch": "vue-cli-service build --watch -mode production",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "watch": "vue-cli-service build --watch -mode production"
   },
   "dependencies": {
     "@vue/cli-plugin-pwa": "~4.5.0",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
-    "vuetify": "^2.3.9"
+    "vuetify": "^2.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -21,13 +22,11 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "sass": "^1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.0",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.3.0",
-    "sass": "^1.19.0",
-    "sass-loader": "^8.0.2"
-  },
-  "optionalDependencies": {
-    "node-sass": "^4.12.0"
+    "vuetify-loader": "^1.7.0"
   },
   "eslintConfig": {
     "root": true,
@@ -54,5 +53,7 @@
     "not ie <= 8"
   ],
   "keywords": [],
-  "description": ""
+  "optionalDependencies": {
+    "node-sass": "^4.12.0"
+  }
 }
