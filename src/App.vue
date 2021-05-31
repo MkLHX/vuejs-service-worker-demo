@@ -1,18 +1,23 @@
 <template>
-  <div id="app">
-    <button v-if="updateExists" @click="refreshApp" class="btn">
-      New version available! Click to update
-    </button>
-    <div v-else>There's no update yet.</div>
-    <br />
-    <button
-      v-if="notificationsEnabled"
-      @click="notify('hello', 'world')"
-      class="btn"
-    >
-      send push notification
-    </button>
-  </div>
+  <v-app>
+    <v-main>
+      <v-container>
+        <v-alert border="left" color="indigo" dark> vuetify loaded </v-alert>
+        <v-btn v-if="updateExists" @click="refreshApp" class="btn">
+          New version available! Click to update
+        </v-btn>
+        <p v-else>There's no update yet.</p>
+        <br />
+        <v-btn
+          v-if="notificationsEnabled"
+          @click="notify('hello', 'world')"
+          class="btn"
+        >
+          send push notification
+        </v-btn>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -99,7 +104,7 @@ export default {
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -116,5 +121,5 @@ export default {
   color: #fafafa;
   font-size: 1rem;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-}
+} */
 </style>

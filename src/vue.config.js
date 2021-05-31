@@ -7,4 +7,8 @@ module.exports = {
             swSrc: './src/service-worker.js',
         }
     },
+    outputDir: "./dist",
+    transpileDependencies: [
+        "vuetify"
+    ],
 }
