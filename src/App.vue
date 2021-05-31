@@ -6,7 +6,7 @@
         <v-btn v-if="updateExists" @click="refreshApp" class="btn">
           New version available! Click to update
         </v-btn>
-        <p v-else>There's no update yet.</p>
+        <p v-else>There's no app update yet.</p>
         <br />
         <v-btn
           v-if="notificationsEnabled"
